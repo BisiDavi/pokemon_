@@ -1,40 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { fetchPokemonData, getSitePokemon } from "../utils/getPokemon";
+import usePokemon from "../hooks/usePokemon";
 import toSlug from "../utils/toSlug";
 
 export default function PokemonView() {
-  const [pokemons, setPokemons] = useState([]);
-  const [fetchMore, setFetchMoreDetails] = useState(false);
-  const { data, status } = useQuery({
-    queryKey: ["getPokemon"],
-    queryFn: getSitePokemon,
-  });
-
-  let pks = [];
-
-  function getAllPokemon(pokemonArray) {
-    return pokemonArray.results.forEach(async (pokemon) => {
-      await fetchPokemonData(pokemon)
-        .then((data) => {
-          pks.push(data);
-          setFetchMoreDetails(true);
-          return pks;
-        })
-        .then((response) => setPokemons(response));
-    });
-  }
-
-  useEffect(() => {
-    if (status === "success") {
-      getAllPokemon(data);
-    }
-  }, [status, fetchMore]);
-
-  console.log("pokemons", pokemons);
+  const { pokemons } = usePokemon();
 
   return (
     <div className="pokemon_group">
