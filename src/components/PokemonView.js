@@ -41,7 +41,11 @@ export default function PokemonView() {
           const pokemonElementIdx = `${pokemon.name}-${pokemonIndex}`;
           const pokemonSlug = toSlug(pokemon.name);
           return (
-            <Link key={pokemonElementIdx} to={`/pokemon/${pokemonSlug}`}>
+            <Link
+              key={pokemonElementIdx}
+              to={`/pokemon/${pokemonSlug}`}
+              state={{ pokemon }}
+            >
               <div className="pokemon">
                 <img
                   src={pokemon.sprites.other.home.front_default}
@@ -54,8 +58,20 @@ export default function PokemonView() {
                     #{pokemonIndex} - {pokemon.name}
                   </h5>
                   <div className="detail">
-                    <p>{pokemon.height}m</p>-
-                    <p>HP:{pokemon.stats[0].base_stat}</p>
+                    <p>
+                      {pokemon.height}m/{pokemon.weight}kg
+                    </p>
+                    -<p>HP:{pokemon.stats[0].base_stat}</p>
+                  </div>
+                  <div className="group">
+                    {pokemon.types.map((type, index) => {
+                      const color = index % 2 === 0 ? "red" : "green";
+                      return (
+                        <div className={`item ${color}`} key={type.slot}>
+                          {type.name}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>

@@ -54,3 +54,13 @@
 a {
   text-decoration: none;
 }
+
+.pokemonDetails .top {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.pokemonDetails .top h3 {
+  font-size: 40px;
+}
