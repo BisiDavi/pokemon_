@@ -38,6 +38,7 @@ export default function PokemonView() {
       {pokemons.length > 0 &&
         pokemons.map((pokemon, index) => {
           const pokemonIndex = index + 1;
+          const pokemonName = pokemon.name.toUpperCase();
           const pokemonElementIdx = `${pokemon.name}-${pokemonIndex}`;
           const pokemonSlug = toSlug(pokemon.name);
           return (
@@ -55,7 +56,7 @@ export default function PokemonView() {
                 />
                 <div className="text-view">
                   <h5>
-                    #{pokemonIndex} - {pokemon.name}
+                    #{pokemonIndex} - {pokemonName}
                   </h5>
                   <div className="detail">
                     <p>
