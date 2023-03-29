@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 
 export default function PokemonDetails() {
   return (
-    <div>PokemonDetails</div>
+    <div>
+      
+    </div>
   )
 }

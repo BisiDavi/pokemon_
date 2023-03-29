@@ -5,8 +5,15 @@
 
 .searchbar {
   display: flex;
-  margin: 20px auto;
+  margin: 30px auto;
   justify-content: center;
+}
+
+.searchbar input {
+  padding: 10px;
+  width: 50%;
+  border-radius: 10px;
+  font-size: 20px;
 }
 
 .pokemon {
@@ -14,6 +21,7 @@
   flex-direction: row;
   margin: 10px;
   border: 1px solid black;
+  align-items: center;
 }
 
 .pokemon .text-view {
@@ -33,4 +41,16 @@
   max-width: 80%;
   margin: 40px auto;
   border: 1px solid black;
+}
+
+.pokemon {
+  color: black;
+}
+
+.pokemon:hover {
+  color: red;
+}
+
+a {
+  text-decoration: none;
 }
