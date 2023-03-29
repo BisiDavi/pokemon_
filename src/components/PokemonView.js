@@ -1,19 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { fetchPokemonData, getPokemon } from "../utils/getPokemon";
+import { fetchPokemonData, getSitePokemon } from "../utils/getPokemon";
 import toSlug from "../utils/toSlug";
 
 export default function PokemonView() {
-  const [pokemonArray, setPokemonArray] = useState(null);
   const [pokemons, setPokemons] = useState([]);
+  const [fetchMore, setFetchMoreDetails] = useState(false);
+  const { data, status } = useQuery({
+    queryKey: ["getPokemon"],
+    queryFn: getSitePokemon,
+  });
 
-  function getAllPokemon() {
+  let pks = [];
+
+  function getAllPokemon(pokemonArray) {
     return pokemonArray.results.forEach(async (pokemon) => {
       await fetchPokemonData(pokemon)
         .then((data) => {
           pks.push(data);
+          setFetchMoreDetails(true);
           return pks;
         })
         .then((response) => setPokemons(response));
@@ -21,27 +29,22 @@ export default function PokemonView() {
   }
 
   useEffect(() => {
-    getPokemon(setPokemonArray);
-  }, []);
-
-  let pks = [];
-  useEffect(() => {
-    if (pokemonArray !== null) {
-      getAllPokemon();
+    if (status === "success") {
+      getAllPokemon(data);
     }
-  }, [pokemonArray]);
+  }, [status, fetchMore]);
 
   console.log("pokemons", pokemons);
 
   return (
     <div className="pokemon_group">
-      {pokemons.length > 0 &&
+      {pokemons.length > 0 ? (
         pokemons.map((pokemon, index) => {
           const pokemonIndex = index + 1;
           const pokemonName = pokemon.name.toUpperCase();
           const pokemonElementIdx = `${pokemon.name}-${pokemonIndex}`;
           const pokemonSlug = toSlug(pokemon.name);
-          console.log("pokemon", pokemon.types);
+
           return (
             <Link
               key={pokemonElementIdx}
@@ -68,8 +71,10 @@ export default function PokemonView() {
                   <div className="group">
                     {pokemon.types.map(({ type }, index) => {
                       const color = index % 2 === 0 ? "red" : "green";
+                      const typeIndex = `${type.slot}-${index}`;
+
                       return (
-                        <div className={`item ${color}`} key={type.slot}>
+                        <div key={typeIndex} className={`item ${color}`}>
                           {type.name}
                         </div>
                       );
@@ -79,7 +84,10 @@ export default function PokemonView() {
               </div>
             </Link>
           );
-        })}
+        })
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 }

@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/pokemon/:_id" element={<PokemonDetails />} />
+        <Route path="/pokemon/:id" element={<PokemonDetails />} />
       </Routes>
     </div>
   );

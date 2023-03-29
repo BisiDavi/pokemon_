@@ -8,3 +8,9 @@ export function getPokemon(allPokemonArray) {
     .then((response) => response.json())
     .then((allPokemon) => allPokemonArray(allPokemon));
 }
+
+export function getSitePokemon() {
+  return fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
+    .then((response) => response.json())
+    .then((allPokemon) => allPokemon);
+}
