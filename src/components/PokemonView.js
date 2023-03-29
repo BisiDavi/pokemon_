@@ -1,6 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import { fetchPokemonData, getPokemon } from "../utils/getPokemon";
+import toSlug from "../utils/toSlug";
 
 export default function PokemonView() {
   const [pokemonArray, setPokemonArray] = useState(null);
@@ -35,24 +38,28 @@ export default function PokemonView() {
       {pokemons.length > 0 &&
         pokemons.map((pokemon, index) => {
           const pokemonIndex = index + 1;
+          const pokemonElementIdx = `${pokemon.name}-${pokemonIndex}`;
+          const pokemonSlug = toSlug(pokemon.name);
           return (
-            <div className="pokemon">
-              <img
-                src={pokemon.sprites.other.home.front_default}
-                alt={pokemon.name}
-                height="100px"
-                width="100px"
-              />
-              <div className="text-view">
-                <h5>
-                  #{pokemonIndex} - {pokemon.name}
-                </h5>
-                <div className="detail">
-                  <p>{pokemon.height}m</p>-
-                  <p>HP:{pokemon.stats[0].base_stat}</p>
+            <Link key={pokemonElementIdx} to={`/pokemon/${pokemonSlug}`}>
+              <div className="pokemon">
+                <img
+                  src={pokemon.sprites.other.home.front_default}
+                  alt={pokemon.name}
+                  height="100px"
+                  width="100px"
+                />
+                <div className="text-view">
+                  <h5>
+                    #{pokemonIndex} - {pokemon.name}
+                  </h5>
+                  <div className="detail">
+                    <p>{pokemon.height}m</p>-
+                    <p>HP:{pokemon.stats[0].base_stat}</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           );
         })}
     </div>
