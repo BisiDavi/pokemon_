@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
-import "./App.css";
 import HomePage from "./Home";
 import PokemonDetails from "./PokemonDetails";
+import "./App.css";
 
 function App() {
   return (

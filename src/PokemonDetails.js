@@ -13,8 +13,6 @@ export default function PokemonDetails() {
     enabled: !!id,
   });
 
-  console.log("pokemon", pokemon);
-
   const name = pokemon ? pokemon?.name.toUpperCase() : "";
   return (
     <div className="pokemonDetails">

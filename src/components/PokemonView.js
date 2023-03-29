@@ -1,15 +1,27 @@
+import FuzzySearch from "fuzzy-search";
 import { Link } from "react-router-dom";
 
 import usePokemon from "../hooks/usePokemon";
 import toSlug from "../utils/toSlug";
 
-export default function PokemonView() {
+export default function PokemonView({ search }) {
   const { pokemons } = usePokemon();
+  const searcher = new FuzzySearch(
+    pokemons,
+    ["name", "height", "weight", "types.name"],
+    {
+      caseSensitive: false,
+    }
+  );
+  const result = searcher.search(search);
+  const pokemonArray = search.length > 2 ? result : pokemons;
+
+  console.log("pokemonArray", pokemonArray);
 
   return (
     <div className="pokemon_group">
-      {pokemons.length > 0 ? (
-        pokemons.map((pokemon, index) => {
+      {pokemonArray.length > 0 ? (
+        pokemonArray.map((pokemon, index) => {
           const pokemonIndex = index + 1;
           const pokemonName = pokemon.name.toUpperCase();
           const pokemonElementIdx = `${pokemon.name}-${pokemonIndex}`;
