@@ -14,3 +14,9 @@ export function getSitePokemon() {
     .then((response) => response.json())
     .then((allPokemon) => allPokemon);
 }
+
+export function getPokemonDetail(id) {
+  return fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((response) =>
+    response.json()
+  );
+}

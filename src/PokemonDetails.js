@@ -1,21 +1,28 @@
-import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-export default function PokemonDetails() {
-  const [pokemon, setPokemon] = useState(null);
-  const { id } = useParams();
+import { getPokemonDetail } from "./utils/getPokemon";
 
-  useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-      .then((response) => response.json())
-      .then((data) => setPokemon(data));
-  }, []);
+export default function PokemonDetails() {
+  const { id } = useParams();
+  const { data: pokemon, status } = useQuery({
+    queryKey: ["getPokemonDetail"],
+    queryFn: () => getPokemonDetail(id),
+    enabled: !!id,
+  });
+
+  console.log("pokemon", pokemon);
 
   const name = pokemon ? pokemon?.name.toUpperCase() : "";
   return (
     <div className="pokemonDetails">
-      {pokemon !== null ? (
+      {status === "error" ? (
+        <p>unable to fetch pokemon</p>
+      ) : status === "loading" ? (
+        <p>fetching pokemon</p>
+      ) : (
         <>
           <Link to="/">
             <button>← Go back</button>
@@ -45,8 +52,6 @@ export default function PokemonDetails() {
             </div>
           </div>
         </>
-      ) : (
-        <p>Loading...</p>
       )}
     </div>
   );
