@@ -41,6 +41,7 @@ export default function PokemonView() {
           const pokemonName = pokemon.name.toUpperCase();
           const pokemonElementIdx = `${pokemon.name}-${pokemonIndex}`;
           const pokemonSlug = toSlug(pokemon.name);
+          console.log("pokemon", pokemon.types);
           return (
             <Link
               key={pokemonElementIdx}
@@ -65,7 +66,7 @@ export default function PokemonView() {
                     -<p>HP:{pokemon.stats[0].base_stat}</p>
                   </div>
                   <div className="group">
-                    {pokemon.types.map((type, index) => {
+                    {pokemon.types.map(({ type }, index) => {
                       const color = index % 2 === 0 ? "red" : "green";
                       return (
                         <div className={`item ${color}`} key={type.slot}>
