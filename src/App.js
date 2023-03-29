@@ -1,14 +1,14 @@
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import Searchbar from "./Searchbar";
-import { useState } from "react";
-import PokemonView from "./PokemonView";
+import HomePage from "./Home";
 
 function App() {
-  const [search, setSearch] = useState("");
   return (
     <div className="App">
-      <Searchbar search={search} setSearch={setSearch} />
-      <PokemonView />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/pokemon/:_id" element={<HomePage />} />
+      </Routes>
     </div>
   );
 }

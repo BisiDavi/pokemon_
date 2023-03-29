@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { fetchPokemonData, getPokemon } from "./getPokemon";
+import { fetchPokemonData, getPokemon } from "../utils/getPokemon";
 
 export default function PokemonView() {
   const [pokemonArray, setPokemonArray] = useState(null);

@@ -12,6 +12,8 @@
 .pokemon {
   display: flex;
   flex-direction: row;
+  margin: 10px;
+  border: 1px solid black;
 }
 
 .pokemon .text-view {
